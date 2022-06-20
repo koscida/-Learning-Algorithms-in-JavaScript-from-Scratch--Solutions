@@ -1,4 +1,4 @@
-function fizzBuzz(num) {
+FizzBuzz = (num) => {
   [...Array(num+1).keys()].slice(1).forEach(i => {
     if(i % 3 == 0 && i % 5 == 0)
       console.log("FizzBuzz")
@@ -11,4 +11,4 @@ function fizzBuzz(num) {
   })
 }
 
-fizzBuzz(20)
+export default { FizzBuzz }
