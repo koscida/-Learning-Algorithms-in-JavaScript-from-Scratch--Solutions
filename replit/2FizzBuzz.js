@@ -1,4 +1,4 @@
-FizzBuzz = (num) => {
+const FizzBuzz = (num) => {
   [...Array(num+1).keys()].slice(1).forEach(i => {
     if(i % 3 == 0 && i % 5 == 0)
       console.log("FizzBuzz")
@@ -11,4 +11,9 @@ FizzBuzz = (num) => {
   })
 }
 
-export default { FizzBuzz }
+const RunFizzBuzz = () => {
+  const num = prompt("Enter a number between 0 and 50")
+  FizzBuzz(num % 50)
+}
+
+export default RunFizzBuzz

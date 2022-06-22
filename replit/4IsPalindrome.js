@@ -16,7 +16,7 @@ function isPalindrome(text) {
 
   // 3. Test if same forwards/back
   // O(n/2)
-  for (i of [...Array(Math.floor(t.length/2)).keys()]) {
+  for (const i of [...Array(Math.floor(t.length/2)).keys()]) {
     // O(1)  // O(1)
     if(t[i] != t[t.length-1-i])
       pal = false
@@ -56,17 +56,14 @@ function isPalindrome2(text) {
 }
 
 
+const RunIsPalindrome = () => {
+	const text = prompt("Enter a string")
+	console.log(isPalindrome(text))
+	console.log(isPalindrome1(text))
+	console.log(isPalindrome2(text))
+}
 
-const text1 = "race car"
-const text2 = "Madam, I'm Adam"
-const text3 = "fdjskalg ewkjals"
 
-// console.log(isPalindrome(text1))
-// console.log(isPalindrome(text2))
-// console.log(isPalindrome(text3))
-
-console.log(isPalindrome2(text1))
-console.log(isPalindrome2(text2))
-console.log(isPalindrome2(text3))
+export default RunIsPalindrome
 
 

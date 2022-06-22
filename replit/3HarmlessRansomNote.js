@@ -25,16 +25,6 @@ function harmlessRansonNote(noteText, magazineText) {
   return true
 }
 
-const note = "aaa bbb ccc"
-const mag1 = "aaa bbb ccc"
-const mag2 = "aaa bbb"
-console.log(harmlessRansonNote(note, mag1))
-console.log(harmlessRansonNote(note, mag2))
-
-
-
-
-
 
 // Code Solution #1
 function harmlessRansomNote1(noteText, magazineText) {
@@ -87,6 +77,15 @@ function harmlessRansomNote1(noteText, magazineText) {
   // O(1)
   return isNotePossible
 }
-console.log(harmlessRansomNote1(note, mag1))
-console.log(harmlessRansomNote1(note, mag2))
+
+
+const RunHarmlessRansomNote = () => {
+	const note = prompt("Enter a note")
+	const mag = prompt("Enter the magazine")
+	console.log(harmlessRansomNote1(note))
+	console.log(harmlessRansomNote1(mag))
+}
+
+
+export default RunHarmlessRansomNote
 
