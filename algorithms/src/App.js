@@ -5,6 +5,7 @@ import CaesarCipher from './5CaesarCipher.js'
 import ReverseWords from './6ReverseWords.js'
 import ReverseArrayInPlace from './7ReverseArrayInPlace.js'
 import MeanMedianMode from './8MeanMedianMode.js'
+import TwoSum from './9TwoSum.js'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 		<ReverseWords />
 		<ReverseArrayInPlace />
 		<MeanMedianMode />
+		<TwoSum />
     </div>
   );
 }
