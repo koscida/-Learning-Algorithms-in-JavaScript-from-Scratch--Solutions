@@ -8,6 +8,8 @@ import MeanMedianMode from './8MeanMedianMode.js'
 import TwoSum from './9TwoSum.js'
 import BinarySearch from './10BinarySearch.js'
 import Fibonacci from './11Fibonacci.js'
+import MemorizedFibonacci from './12MemorizedFibonacci.js'
+import SieveEratosthenes from './13SieveEratosthenes.js'
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
 		<TwoSum />
 		<BinarySearch />
 		<Fibonacci />
+		<MemorizedFibonacci />
+		<SieveEratosthenes />
     </div>
   );
 }

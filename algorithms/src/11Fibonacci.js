@@ -2,6 +2,11 @@ import React, {useState} from 'react'
 
 // Attempt #1
 const attempt1 = (position) => {
+	// O(1) + (1 * O(1))
+	//	O(1) + (1 * O(1))
+	//	O(1) + (O(1^n) + O(1^n)) ??
+	// O(1) + O(1) + O(1) + O(2^n) ??
+	// O(2^n)
 	if(position === 1) return 1
 	else if(position === 2) return 1
 	else if(position > 2) return attempt1(position-1) + attempt1(position-2)
@@ -10,6 +15,7 @@ const attempt1 = (position) => {
 
 // Code Solution #1
 const solution1 = (position) => {
+	// O(2^n)
 	if(position < 3) return 1
 	else return solution1(position - 1) + solution1(position - 2)
 }
