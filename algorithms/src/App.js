@@ -10,6 +10,9 @@ import BinarySearch from './10BinarySearch.js'
 import Fibonacci from './11Fibonacci.js'
 import MemorizedFibonacci from './12MemorizedFibonacci.js'
 import SieveEratosthenes from './13SieveEratosthenes.js'
+import BubbleSort from './14BubbleSort.js'
+import MergeSort from './15MergeSort.js'
+import MaxStockProfit from './16MaxStockProfit.js'
 
 
 function App() {
@@ -27,6 +30,9 @@ function App() {
 		<Fibonacci />
 		<MemorizedFibonacci />
 		<SieveEratosthenes />
+		<BubbleSort />
+		<MergeSort />
+		<MaxStockProfit />
     </div>
   );
 }

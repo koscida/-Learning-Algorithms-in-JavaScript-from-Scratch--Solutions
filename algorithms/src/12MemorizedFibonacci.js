@@ -1,28 +1,37 @@
 import React, {useState} from 'react'
 
 // Attempt #1
-const attempt1 = (index, cache) => {
-	if(index === 1) return [1]
-	else if(index === 2) return [1,1]
+const attempt1 = (index, cache, ops) => {
+	ops = ops || 0
+	ops++
+	
+	if(index === 1) return [[1],ops]
+	else if(index === 2) return [[1,1],ops]
 	else if(index > 2) {
-		const pastCache = attempt1(index-1, cache)
+		const [pastCache, pastOps] = attempt1(index-1, cache, ops)
+		ops += pastOps
 		const newValue = pastCache[pastCache.length-1] + pastCache[pastCache.length-2]
-		return [...pastCache, newValue]
+		return [[...pastCache, newValue],ops]
 	}
-	else return [0]
+	else return [[0],ops]
 }
 
 // Code Solution #1
-const solution1 = (index, cache) => {
+const solution1 = (index, cache, ops) => {
+	ops = ops || 0
+	ops++
+	
 	cache = cache || []
-	if(cache[index]) return cache[index]
+	
+	if(index === 1) return [[1], ops]
+	else if(index === 2) return [[1,1], ops]
 	else {
-		if(index < 3) return 1
-		else {
-			cache[index] = solution1(index-1, cache) + solution1(index-2, cache)
-		}
+		let [cacheA, opsA] = solution1(index-1, cache, ops)
+		const [cacheB, opsB] = solution1(index-2, cache, ops)
+		ops += (opsA + opsB)
+		cacheA[index-1] = cacheA[cacheA.length-1] + cacheB[cacheB.length-1]
+		return [cacheA, ops]
 	}
-	return cache[index]
 }
 
 const Fib = (index) => {
@@ -39,21 +48,23 @@ const Fib = (index) => {
 
 const MemorizedFibonacci = (props) => {
 	const startingIndex = 6
-	const startingAttempt1Cache = attempt1(startingIndex, [])
-	const startingSolution1Cache = solution1(startingIndex)
+	const startingAttempt1Response = attempt1(startingIndex, [])
+	const startingSolution1Response = solution1(startingIndex)
 	const [index, setIndex] = useState(startingIndex)
-	const [attempt1Cache, setAttempt1Cache] = useState(startingAttempt1Cache)
-	const [solution1Cache, setSolution1Cache] = useState(startingSolution1Cache)
+	const [attempt1Response, setAttempt1Response] = useState(startingAttempt1Response)
+	const [solution1Response, setSolution1Response] = useState(startingSolution1Response)
 	
 	const handleChange = (value) => {
 		setIndex(Number(value))
-		setAttempt1Cache(attempt1(value, attempt1Cache))
-		setSolution1Cache(solution1(value))
+		setAttempt1Response(attempt1(value, attempt1Response))
+		setSolution1Response(solution1(value))
 	}
 	
-	const Response = (cache) => {
+	const Response = ([cache, ops]) => {
 		return <div>
-			{cache.join(", ")}
+			Cache: {cache.join(", ")}
+			<br />
+			Operations: {ops}
 		</div>
 	}
 	
@@ -66,14 +77,14 @@ const MemorizedFibonacci = (props) => {
 		</div>
 		
 		<p>Attempt #1</p>
-		{index && Response(attempt1Cache)}
+		{index && Response(attempt1Response)}
 		
 		<p>Solution #1</p>
-		{index && solution1Cache}
+		{index && Response(solution1Response)}
 		
 		<div>
 			<p>Fibonacci Sequence:</p>
-			{index && Response(Fib(index))}
+			{index && Fib(index).join(", ")}
 		</div>
 		
 	</div>

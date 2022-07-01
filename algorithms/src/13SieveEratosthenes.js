@@ -2,46 +2,133 @@ import React, {useState} from 'react'
 
 // Attempt #1
 const attempt1 = (num) => {
+	// O(nlog(n)) ??
+	
 	if(num < 4) {
-		return [...Array(num+1).keys()].slice(1)
+		return [[...Array(num).keys()].slice(1),num]
 	} else {
 		let primes = [2,3]
-		const s = [...Array(num+1).keys()].slice(4)
+		let ops = 0
+		// O(n)
+		const s = [...Array(num).keys()].slice(4)
+		// O(n)
 		s.forEach(key => {
+			ops++
 			let div = false
+			// primes = O(log(n)) ??
 			for (const prime of primes) {
+				ops++
 				if(key % prime === 0) div = true
 			}
 			if(!div) primes.push(key)
 		})
-		return primes
+		return [primes,ops]
 	} 
 }
 
 // Attempt #2
 const attempt2 = (num) => {
-	let primeMap = [...Array(num+1).keys()].map(k => false)
-	console.log("--primeMap", primeMap)
+	// O(n) + 
+	// O(n^1/2) * O(n)
+	// 	O(n)
+	// O(2n) + O(n^3/2)
+	// O(sqrt(n^2)) ??
+	
+	// O(n)
+	let primeMap = [...Array(num).keys()].map(k => true)
+	
+	let ops = 0
+	
+	// O(n^1/2)
 	for(let i=0;i<Math.ceil(Math.sqrt(num));i++) {
-		console.log("i", i)
-		if(i > 1) {
-			if(primeMap[i] === false) {
+		ops++
+		if(i <= 1) {
+			primeMap[i] = false
+		} else {
+			if(primeMap[i]) {
 				primeMap[i] = true
+				// O(n) ??
 				for(let j=i+i;j<num;j+=i) {
-					primeMap[j] = true
+					ops++
+					primeMap[j] = false
 				}
 			}
 		}
-		console.log("primeMap", primeMap)
 	}
-	console.log("primeMap", primeMap)
-	return primeMap.reduce((prev,x,i)=>x?[...prev,i]:prev,[])
+	
+	// O(n)
+	const primes = primeMap.reduce((prev,x,i)=>x?[...prev,i]:prev,[])
+	
+	return [primes,ops]
 	
 }
 
 // Code Solution #1
 const solution1 = (num) => {
-	return []
+	// O(n) + 
+	// O(n^1/2) * O(n)
+	// 	O(n)
+	// O(sqrt(n^2)) ??
+	
+	let ops = 0
+	let primes = [];
+	// O(n)
+	for(let i=0;i<=num;i++) {
+		primes[i] = true;
+	}
+	
+	primes[0] = false
+	primes[1] = false
+	
+	// O(n^1/2)
+	for(let i=2;i<Math.sqrt(num);i++) {
+		ops++
+		// O(n)
+		for(let j=2;j*i<=num;j++) {
+			ops++
+			primes[i*j] = false
+		}
+	}
+	
+	let result = []
+	// O(n)
+	for(let i=0;i<primes.length;i++) {
+		if(primes[i]) result.push(i)
+	}
+
+	return [result,ops]
+}
+
+// Attempt #2
+const attempt3 = (num) => {
+	/// O(sqrt(n^2)) ??
+	
+	let ops = 0
+	
+	// O(n)
+	let primeMap = [...Array(num).keys()].map(k => true)
+	
+	// O(n^1/2)
+	for(let i=0;i<Math.ceil(Math.sqrt(num));i++) {
+		ops++
+		if(i <= 1) {
+			primeMap[i] = false
+		} else {
+			if(primeMap[i]) {
+				// O(n)
+				for(let j=i+i;j<num;j+=i) {
+					ops++
+					primeMap[j] = false
+				}
+			}
+		}
+	}
+	
+	// O(n)
+	const primes = primeMap.reduce((prev,x,i)=>x?[...prev,i]:prev,[])
+	
+	return [primes, ops]
+	
 }
 
 
@@ -55,8 +142,11 @@ const SieveEratosthenes = (props) => {
 	}
 	
 	const Response = (func) => {
+		const [arr, ops] = func(num)
 		return <div>
-			{func(num).join(', ')}
+			Primes: {arr.join(', ')}
+			<br />
+			Operations: {ops}
 		</div>
 	}
 	
@@ -76,6 +166,9 @@ const SieveEratosthenes = (props) => {
 		
 		<p>Solution #1</p>
 		{Response(solution1)}
+		
+		<p>Attempt #3</p>
+		{Response(attempt3)}
 		
 	</div>
 }
